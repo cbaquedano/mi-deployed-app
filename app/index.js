@@ -1,6 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const Redis = require('redis');
+const logger = require('./simple-logger');
 
 const app = express();
 const port = 3000;
@@ -21,6 +22,28 @@ app.get('/', async (req, res) => {
   await redisClient.set('lastVisit', new Date().toISOString());
   const lastVisit = await redisClient.get('lastVisit');
   res.send(`¡Hola! Última visita registrada: ${lastVisit}`);
+});
+
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
+});
+
+app.get('/health', (req, res) => {
+  logger.info('Health check realizado');
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    message: "¡Mi aplicación está funcionando!"
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    message: "¡Mi aplicación está funcionando!"
+  });
 });
 
 app.listen(port, () => {

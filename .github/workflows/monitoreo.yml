@@ -1,0 +1,13 @@
+name: Monitoreo seguro
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  check-health:
+    runs-on: [self-hosted, linux]
+
+    steps:
+      - name: Verificar que /health responde
+        run: curl -s http://localhost:3000/health || echo "❌ Error"

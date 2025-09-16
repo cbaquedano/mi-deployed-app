@@ -16,11 +16,11 @@ jobs:
     - name: Parar servicios anteriores
       run: docker compose down -v || true
 
-    - name: Construir servicios
-      run: docker compose -f docker-compose.yml build
+#    - name: Construir servicios
+#      run: docker compose -f docker-compose.yml build
 
-    - name: Levantar servicios
-      run: docker compose -f docker-compose.yml up -d
+ #   - name: Levantar servicios
+ #     run: docker compose -f docker-compose.yml up -d
 
     - name: Verificar app
       run: curl -f http://localhost:3000/health

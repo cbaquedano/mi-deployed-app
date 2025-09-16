@@ -16,6 +16,11 @@ services:
       - redis
     volumes:
       - ./app:/app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   postgres:
     image: postgres:15-alpine
